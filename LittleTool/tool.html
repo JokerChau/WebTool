@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具箱</title>
+    <style>
+        /*“:root是伪类”，选中根元素，可在html、svg、xml等元素中使用*/
+        /*
+        top-bar是选中所有叫top-bar的自定义标签
+        .top-bar是选中所有叫top-bar的类名
+        #top-bar是选中所有叫top-bar的id
+        */
+        :root {
+            /* 主色 */
+            --primary: #0689ee;
+            /* 页面底色 */
+            --bg: #f0f2f5;
+            /* 卡片背景 */
+            --card-bg: #ffffff;
+            /* 文字 */
+            --text: #333333;
+            /* 次文字 */
+            --text-secondary: #666666;
+            /* 边框 */
+            --border: #e0e4e8;
+            /* 阴影 */
+            /*0:右偏0像素，1px:下偏1像素，3px:模糊扩散3像素，rgba(0, 0, 0, 0.06):纯黑，透明度为0.06*/
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            /* 中阴影 */
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+            /* 大阴影 */
+            --shadow-lg: 0 4px 12px rgba(0, , 0., 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+            /* 圆角 */
+            --radius: 12px;
+            /* 小圆角 */
+            --radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 字体 */
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+            /* 宽度 */
+            max-width: 680px;
+            margin: 0 auto;
+            /* 内边距 */
+            padding: 20px 20px 40px;
+            /* 背景 */
+            background: var(--bg);
+            /* 文字 */
+            color: var(--text);
+            /* 行高 */
+            line-height: 1.6;
+            /* 字体平滑 */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========== 顶部导航框 ========== */
+        .top-bar {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            flex-wrap: wrap;
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 16px;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+        }
+
+        .top-bar .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 100px;
+        }
+
+        .top-bar .nav-group h2 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .top-bar .nav-group h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .top-bar .nav-group .nav-link {
+            font-size: 0.9rem;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 4px 0 4px 14px;
+            transition: color 0.2s, transform 0.15s;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .top-bar .nav-group .nav-link:hover {
+            color: #ff6b6b;
+            transform: translateX(3px);
+            text-decoration: underline;
+        }
+
+        .top-bar .nav-group .nav-link:active {
+            color: orange;
+        }
+
+        .top-bar .nav-group .nav-link:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .top-bar .nav-group .nav-link.visited {
+            color: #8b3434;
+            text-decoration: underline;
+        }
+
+        /* ========== 内容卡片 ========== */
+        .content-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.25s;
+        }
+
+        .content-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .content-card h3 {
+            margin: 0 0 18px 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .content-card h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .content-card h4 {
+            margin: 18px 0 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #444;
+            letter-spacing: 0.02em;
+        }
+
+        .content-card h5 {
+            margin: 12px 0 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #555;
+            letter-spacing: 0.02em;
+            padding-left: 8px;
+            border-left: 3px solid #ddd;
+        }
+
+        .content-card nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 6px 0 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .content-card nav ul li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-card nav ul li a {
+            display: inline-block;
+            padding: 7px 16px;
+            background: #f7f9fb;
+            border: 1px solid #e8ecf0;
+            border-radius: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .content-card nav ul li a:hover {
+            background: #e8f4fd;
+            border-color: var(--primary);
+            color: #045cad;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(6, 137, 238, 0.15);
+            text-decoration: none;
+        }
+
+        .content-card nav ul li a:active {
+            color: orange;
+            transform: scale(0.96);
+        }
+
+        .content-card nav ul li a:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .content-card nav ul li a.visited {
+            color: #8b3434;
+            text-decoration: underline;
+            background: #fdf5f5;
+            border-color: #e8d0d0;
+        }
+
+        /* 目标小记的链接列表（非胶囊样式） */
+        .goal-list {
+            list-style: none;
+            padding: 0;
+            margin: 6px 0 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .goal-list li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .goal-list li a {
+            display: block;
+            padding: 10px 16px;
+            background: #fafbfc;
+            border: 1px solid #eef0f3;
+            border-radius: var(--radius-sm);
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .goal-list li a::after {
+            content: '→';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bbb;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .goal-list li a:hover {
+            background: #e8f4fd;
+            border-color: var(--primary);
+            color: #045cad;
+            padding-right: 28px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(6, 137, 238, 0.1);
+        }
+
+        .goal-list li a:hover::after {
+            color: var(--primary);
+            transform: translateY(-50%) translateX(4px);
+        }
+
+        .goal-list li a:active {
+            color: orange;
+            transform: scale(0.98);
+        }
+
+        .goal-list li a:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .goal-list li a.visited {
+            color: #8b3434;
+            text-decoration: underline;
+            background: #fdf5f5;
+            border-color: #e8d0d0;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 500px) {
+            body {
+                padding: 12px 12px 32px;
+            }
+
+            .top-bar {
+                padding: 16px 18px;
+                gap: 20px;
+                flex-direction: column;
+                top: 8px;
+            }
+
+            .top-bar .nav-group {
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .top-bar .nav-group h2 {
+                font-size: 0.95rem;
+                padding-left: 12px;
+            }
+
+            .top-bar .nav-group h2::before {
+                height: 15px;
+                width: 3px;
+            }
+
+            .top-bar .nav-group .nav-link {
+                padding-left: 0;
+                font-size: 0.85rem;
+            }
+
+            .content-card {
+                padding: 16px 16px;
+            }
+
+            .content-card h3 {
+                font-size: 1.05rem;
+            }
+
+            .content-card nav ul {
+                gap: 6px;
+            }
+
+            .content-card nav ul li a {
+                padding: 6px 12px;
+                font-size: 0.82rem;
+                border-radius: 16px;
+            }
+
+            .goal-list li a {
+                padding: 9px 14px;
+                font-size: 0.88rem;
+            }
+
+            .goal-list li a::after {
+                right: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 顶部导航框 ==================== -->
+    <header class="top-bar">
+        <div class="nav-group">
+            <h2 id="header-工具箱" title="工具箱" class="工具箱">工具箱</h2>
+            <a href="#链接区" title="点击跳转至链接区" class="nav-link">链接区</a>
+            <a href="#计算器" title="点击跳转至计算器" class="nav-link">计算器</a>
+        </div>
+        <div class="nav-group">
+            <h2 id="header-目标小记" title="目标小记" class="目标小记">目标小记</h2>
+            <a href="#目标小记" title="点击跳转至目标小记" class="nav-link">目标小记</a>
+        </div>
+    </header>
+
+    <!-- ==================== 主内容区 ==================== -->
+    <main>
+
+        <!-- 链接区卡片 -->
+        <section class="content-card" id="链接区" aria-labelledby="链接区-heading">
+            <h3 id="链接区-heading" title="链接区">链接区</h3>
+
+            <h4 id="AI工具-heading" title="AI工具">AI工具</h4>
+            <nav aria-label="AI工具导航">
+                <ul>
+                    <li id="DeepSeek"><a href="https://www.deepseek.com" title="DeepSeek官网——深度求索" target="_blank" rel="noopener">DeepSeek</a></li>
+                    <li id="Doubao"><a href="https://www.doubao.com" title="Doubao官网——字节跳动" target="_blank" rel="noopener">豆包</a></li>
+                    <li id="Qwen"><a href="https://chat.qwen.ai" title="Qwen官网——同义千问" target="_blank" rel="noopener">千问</a></li>
+                    <li id="CharGPT"><a href="https://www.chargpt.com" title="CharGPT官网——OpenAI" target="_blank" rel="noopener">ChatGPT</a></li>
+                    <li id="OpenAI"><a href="https://chat.openai.com" title="OpenAI官网——OpenAI" target="_blank" rel="noopener">OpenAI</a></li>
+                    <li id="Gemini"><a href="https://gemini.google.com" title="Gemini官网——Google" target="_blank" rel="noopener">Gemini</a></li>
+                    <li id="Openclaw"><a href="https://jvsclaw.aliyun.com" title="Openclaw部署网址——阿里云" target="_blank" rel="noopener">Openclaw</a></li>
+                    <li id="antafu"><a href="https://www.antafu.com" title="蚂蚁阿福官网——阿里云" target="_blank" rel="noopener">蚂蚁阿福</a></li>
+                    <li id="Kimi"><a href="https://kimi.moonshot.cn" title="Kimi官网——月之暗面" target="_blank" rel="noopener">Kimi</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="游戏工具-heading" title="游戏工具">游戏工具</h4>
+            <h5 id="官方网站-heading" title="官方网站">官方网站</h5>
+            <nav aria-label="游戏官方网站导航">
+                <ul>
+                    <li id="Steam"><a href="https://www.steampowered.com" title="Steam官网——Steam游戏平台" target="_blank" rel="noopener">Steam</a></li>
+                    <li id="Epic"><a href="https://www.epicgames.com" title="Epic官网——Epic游戏平台" target="_blank" rel="noopener">Epic</a></li>
+                    <li id="GOG"><a href="https://www.gog.com" title="GOG官网——GOG游戏平台" target="_blank" rel="noopener">GOG</a></li>
+                    <li id="Valve"><a href="https://www.valvesoftware.com" title="Valve官网——Valve游戏平台" target="_blank" rel="noopener">Valve</a></li>
+                </ul>
+            </nav>
+
+            <h5 id="民间网站-heading" title="民间网站">民间网站</h5>
+            <nav aria-label="民间网站导航">
+                <ul>
+                    <li id="欧卡小站"><a href="https://www.ets2.store" title="欧卡小站" target="_blank" rel="noopener">欧卡小站</a></li>
+                    <li id="PCL2"><a href="https://pcl2.aoe.top/" title="PCL2" target="_blank" rel="noopener">PCL2</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="影音工具" title="影音工具">影音工具</h4>
+            <h5 id="影视工具链接-heading" title="影视工具链接">影视工具链接</h5>
+            <nav aria-label="影视工具网站导航">
+                <ul>
+                    <li id="抖音精选"><a href="https://www.douyin.com" title="抖音精选" target="_blank" rel="noopener">抖音精选</a></li>
+                    <li id="Bilibili"><a href="https://www.bilibili.com" title="Bilibili" target="_blank" rel="noopener">Bilibili</a></li>
+                    <li id="快手"><a href="https://www.kuaishou.com" title="快手" target="_blank" rel="noopener">快手</a></li>
+                    <li id="西瓜视频"><a href="https://www.ixigua.com" title="西瓜视频" target="_blank" rel="noopener">西瓜视频</a></li>
+                    <li id="AcFun"><a href="https://www.acfun.cn" title="AcFun" target="_blank" rel="noopener">AcFun</a></li>
+                </ul>
+            </nav>
+
+            <h5 id="音频工具链接-heading" title="音频工具链接">音频工具链接</h5>
+            <nav aria-label="音频工具网站导航">
+                <ul>
+                    <li id="QQ音乐"><a href="https://www.qqmusic.com/" title="QQ音乐" target="_blank" rel="noopener">QQ音乐</a></li>
+                    <li id="酷狗音乐"><a href="https://www.kugou.com/" title="酷狗音乐" target="_blank" rel="noopener">酷狗音乐</a></li>
+                    <li id="酷我音乐"><a href="https://www.kuwo.cn/" title="酷我音乐" target="_blank" rel="noopener">酷我音乐</a></li>
+                    <li id="网易云音乐"><a href="https://music.163.com/" title="网易云音乐" target="_blank" rel="noopener">网易云音乐</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="社交工具" title="社交工具">社交工具</h4>
+            <nav aria-label="社交工具导航">
+                <ul>
+                    <li id="微信"><a href="https://www.weixin.qq.com/" title="微信" target="_blank" rel="noopener">微信</a></li>
+                    <li id="微信企业版"><a href="https://work.weixin.qq.com/" title="微信企业版" target="_blank" rel="noopener">微信企业版</a></li>
+                    <li id="QQ"><a href="https://im.qq.com/" title="QQ" target="_blank" rel="noopener">QQ</a></li>
+                    <li id="QQTIM版"><a href="https://tim.qq.com/" title="QQTIM版" target="_blank" rel="noopener">QQTIM版</a></li>
+                    <li id="QQ邮箱"><a href="https://mail.qq.com/" title="QQ邮箱" target="_blank" rel="noopener">QQ邮箱</a></li>
+                    <li id="多闪"><a href="https://www.duoshan.com/" title="多闪" target="_blank" rel="noopener">多闪</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="资讯信息" title="资讯信息">资讯信息</h4>
+            <nav aria-label="资讯信息导航">
+                <ul>
+                    <li id="QQ新闻"><a href="https://www.qq.com/" title="QQ新闻" target="_blank" rel="noopener">QQ新闻</a></li>
+                    <li id="新闻"><a href="https://www.news.com/" title="新闻" target="_blank" rel="noopener">新闻</a></li>
+                    <li id="网易新闻"><a href="https://www.163.com/" title="网易新闻" target="_blank" rel="noopener">网易新闻</a></li>
+                    <li id="IT之家"><a href="https://www.ithome.com/" title="IT之家" target="_blank" rel="noopener">IT之家</a></li>
+                    <li id="威锋网"><a href="https://www.feng.com/" title="威锋网" target="_blank" rel="noopener">威锋网</a></li>
+                    <li id="中国网"><a href="https://www.china.com.cn/" title="中国网" target="_blank" rel="noopener">中国网</a></li>
+                    <li id="微博"><a href="https://www.weibo.com/" title="微博" target="_blank" rel="noopener">微博</a></li>
+                    <li id="今日头条"><a href="https://www.toutiao.com/" title="今日头条" target="_blank" rel="noopener">今日头条</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="浏览器" title="浏览器">浏览器</h4>
+            <nav aria-label="浏览器导航">
+                <ul>
+                    <li id="QQbrowser"><a href="https://sj.qq.com/appdetail/com.tencent.pcgame.qqbrowser" title="QQ浏览器" target="_blank" rel="noopener">QQ浏览器</a></li>
+                    <li id="Edge"><a href="https://www.microsoft.com/edge/" title="Edge" target="_blank" rel="noopener">Edge</a></li>
+                    <li id="Firefox"><a href="https://www.mozilla.org/firefox/" title="Firefox" target="_blank" rel="noopener">Firefox</a></li>
+                    <li id="Chrome"><a href="https://www.google.cn/chrome/" title="Chrome" target="_blank" rel="noopener">Chrome</a></li>
+                    <li id="Safari"><a href="https://www.apple.com/safari/" title="Safari" target="_blank" rel="noopener">Safari</a></li>
+                    <li id="Opera"><a href="https://www.opera.com/" title="Opera" target="_blank" rel="noopener">Opera</a></li>
+                    <li id="Baidu"><a href="https://www.baidu.com/" title="Baidu" target="_blank" rel="noopener">百度</a></li>
+                    <li id="360browser"><a href="https://browser.360.cn/" title="360browser" target="_blank" rel="noopener">360安全浏览器</a></li>
+                    <li id="vivobrowser"><a href="https://browser.vivo.com.cn/" title="vivobrowser" target="_blank" rel="noopener">vivo浏览器</a></li>
+
+                </ul>
+            </nav>
+
+            <h4 id="学习网站" title="学习网站">学习网站</h4>
+            <nav aria-label="学习网站导航">
+                <ul>
+                    <li id="MOOC"><a href="https://www.icourse.org/" title="MOOC" target="_blank" rel="noopener">中国大学生MOOC</a></li>
+                    <li id="学习通"><a href="https://www.chaoxing.com/" title="学习通" target="_blank" rel="noopener">学习通</a></li>
+                    <li id="educg"><a href="https://course.educg.net/" title="educg" target="_blank" rel="noopener">希冀</a></li>
+                    <li id="蓝桥杯"><a href="https://dasai.lanqiao.cn/" title="蓝桥杯" target="_blank" rel="noopener">蓝桥杯</a></li>
+                    <li id="洛谷"><a href="https://www.luogu.com.cn/" title="洛谷" target="_blank" rel="noopener">洛谷</a></li>
+                    <li id="LeetCode"><a href="https://leetcode-cn.com/" title="LeetCode" target="_blank" rel="noopener">LeetCode</a></li>
+                    <li id="GitHub"><a href="https://github.com" title="GitHub" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="工作交流" title="工作交流">工作交流</h4>
+            <nav aria-label="工作交流导航">
+                <ul>
+                    <li id="牛客网"><a href="https://www.nowcoder.com/" title="牛客网" target="_blank" rel="noopener">牛客网</a></li>
+                    <li id="BOSS直聘"><a href="https://www.zhipin.com/" title="BOSS直聘" target="_blank" rel="noopener">BOSS直聘</a></li>  
+                    <li id="58同城"><a href="https://www.58.com/" title="58同城" target="_blank" rel="noopener">58同城</a></li>
+                    <li id="拉勾"><a href="https://www.lagou.com/" title="拉勾" target="_blank" rel="noopener">拉勾</a></li>
+                    <li id="智联招聘"><a href="https://www.zhaopin.com/" title="智联招聘" target="_blank" rel="noopener">智联招聘</a></li>
+                    <li id="猎聘"><a href="https://www.liepin.com/" title="猎聘" target="_blank" rel="noopener">猎聘</a></li>
+                    <li id="国聘网"><a href="https://www.iguopin.com/" title="国聘网" target="_blank" rel="noopener">国聘网</a></li>
+                    <li id="国家大学生就业服务平台"><a href="https://job.ncss.cn/" title="国家大学生就业服务平台" target="_blank" rel="noopener">国家大学生就业服务平台</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="汽车资讯" title="汽车资讯">汽车资讯</h4>
+            <nav aria-label="汽车资讯导航">
+                <ul>
+                    <li id="汽车之家"><a href="https://www.autohome.com.cn/" title="汽车之家" target="_blank" rel="noopener">汽车之家</a></li>
+                    <li id="卡车之家"><a href="https://www.360che.com.cn/" title="卡车之家" target="_blank" rel="noopener">卡车之家</a></li>
+                    <li id="懂车帝"><a href="https://www.dongchedi.com/" title="懂车帝" target="_blank" rel="noopener">懂车帝</a></li>
+                </ul>
+            </nav>
+
+            <h4 id="ErrWeb" title="ErrWeb">ErrWeb</h4>
+            <nav aria-label="ErrWeb导航">
+                <ul>
+                    <li id="749nn.com"><a href="http://749nn.com/" title="749nn.com" target="_blank" rel="noopener">749nn.com</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <!-- 目标小记卡片 -->
+        <section class="content-card" id="目标小记" aria-labelledby="目标小记-heading">
+            <h3 id="目标小记-heading" title="目标小记">目标小记</h3>
+
+            <h4 id="今日事-heading" title="“今日事”">"今日事"</h4>
+            <ul class="goal-list" aria-label="今日事链接">
+                <li id="今日事记事本页面"><a href="LiveToday.html" title="今日事记事本页面">"今日事"</a></li>
+            </ul>
+
+            <h4 id="学习目标-heading" title="学习目标">学习目标</h4>
+            <ul class="goal-list" aria-label="学习目标链接">
+                <li id="学习目标页面"><a href="StudyTarget.html" title="学习目标页面">学习目标</a></li>
+            </ul>
+
+            <h4 id="游戏目标-heading" title="游戏目标">游戏目标</h4>
+            <ul class="goal-list" aria-label="游戏目标链接">
+                <li id="游戏目标页面"><a href="GameTarget.html" title="游戏目标页面">游戏目标</a></li>
+            </ul>
+
+            <h4 id="运动目标-heading" title="运动目标">运动目标</h4>
+            <ul class="goal-list" aria-label="运动目标链接">
+                <li id="运动目标页面"><a href="SportsTarget.html" title="运动目标页面">运动目标</a></li>
+            </ul>
+        </section>
+
+        <!-- 计算器卡片 -->
+        <section class="content-card" id="计算器" aria-labelledby="计算器-heading">
+            <h3 id="计算器-heading" title="计算器">计算器</h3>
+
+            <h4 id="简易计算器" title="简易计算器">简易计算器</h4>
+            <ul class="goal-list" aria-label="简易计算器链接">
+                <li id="简易计算器页面"><a href="cal.html" title="简易计算器页面">简易计算器</a></li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script>
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                this.classList.add('visited');
+            });
+        });
+
+        // 当前离线包版本
+        var currentVersion = '1.0.0';
+        // 线上 version.txt 链接（等会儿开启 Pages 后替换成你自己的）
+        var versionUrl = 'https://JokerChau.github.io/WebTool/version';
+    
+        try {
+            fetch(versionUrl)
+                .then(function(res) { return res.text(); })
+                .then(function(onlineVer) {
+                    if (onlineVer.trim() !== currentVersion) {
+                        var msg = '你的工具箱有新版本！\n是否现在去下载最新离线包？';
+                        if (confirm(msg)) {
+                            // 这里换成你的夸克/百度网盘下载地址
+                            window.open('https://pan.baidu.com/s/你的分享链接', '_blank');
+                        }
+                    }
+                })
+                .catch(function() {});
+            } catch (e) {}
+    </script>
+</body>
+</html>
