@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\telbook]
+@="URL:TelBook Protocol"
+"URL Protocol"=""
+
+[HKEY_CLASSES_ROOT\telbook\DefaultIcon]
+@="E:\\Trae\\web\\littleTool\\ConnectBook.exe,0"
+
+[HKEY_CLASSES_ROOT\telbook\shell]
+
+[HKEY_CLASSES_ROOT\telbook\shell\open]
+
+[HKEY_CLASSES_ROOT\telbook\shell\open\command]
+@="cmd /c cd /d \"E:\\Trae\\web\\littleTool\\\" && start \"\" \"ConnectBook.exe\""
